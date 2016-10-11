@@ -69,14 +69,14 @@ mod fs {
 
         pub fn copy(from: &PathBuf, to: &PathBuf) -> Result<(), SE> {
             let mut map = MAP.lock().unwrap();
-            let a = try!(map.get(from).cloned().ok_or(SEK::FileNotFound));
+            let a = try!(map.get(from).cloned().ok_or(SEK::FileNotFound.into_error()));
             map.insert(to.clone(), a);
             Ok(())
         }
 
         pub fn rename(from: &PathBuf, to: &PathBuf) -> Result<(), SE> {
             let mut map = MAP.lock().unwrap();
-            let a = try!(map.get(from).cloned().ok_or(SEK::FileNotFound));
+            let a = try!(map.get(from).cloned().ok_or(SEK::FileNotFound.into_error()));
             map.insert(to.clone(), a);
             Ok(())
         }
