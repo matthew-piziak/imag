@@ -8,7 +8,6 @@ pub use self::fs::FileAbstraction;
 mod fs {
     use error::StoreError as SE;
     use error::StoreErrorKind as SEK;
-    use error::MapErrInto;
     use std::io::Cursor;
     use std::path::PathBuf;
 
@@ -70,14 +69,14 @@ mod fs {
 
         pub fn copy(from: &PathBuf, to: &PathBuf) -> Result<(), SE> {
             let mut map = MAP.lock().unwrap();
-            let a = try!(map.get(from).cloned().map_err_into(SEK::FileNotFound));
+            let a = try!(map.get(from).cloned().ok_or(SEK::FileNotFound));
             map.insert(to.clone(), a);
             Ok(())
         }
 
         pub fn rename(from: &PathBuf, to: &PathBuf) -> Result<(), SE> {
             let mut map = MAP.lock().unwrap();
-            let a = try!(map.get(from).cloned().map_err_into(SEK::FileNotFound));
+            let a = try!(map.get(from).cloned().ok_or(SEK::FileNotFound));
             map.insert(to.clone(), a);
             Ok(())
         }
