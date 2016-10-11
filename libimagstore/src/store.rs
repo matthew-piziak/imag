@@ -2332,15 +2332,11 @@ mod store_tests {
         for n in 1..100 {
             let pb = StoreId::new_baseless(PathBuf::from(format!("test-{}", n))).unwrap();
 
-            {
-                assert!(store.entries.read().unwrap().get(&pb).is_none());
-            }
+            assert!(store.entries.read().unwrap().get(&pb).is_none());
             assert!(store.create(pb.clone()).is_ok());
 
             let pb = pb.with_base(store.path().clone());
-            {
-                assert!(store.entries.read().unwrap().get(&pb).is_some());
-            }
+            assert!(store.entries.read().unwrap().get(&pb).is_some());
         }
     }
 
@@ -2353,15 +2349,11 @@ mod store_tests {
         for n in 1..100 {
             let pb = StoreId::new_baseless(PathBuf::from(format!("test-{}", n))).unwrap();
 
-            {
-                assert!(store.entries.read().unwrap().get(&pb).is_none());
-            }
+            assert!(store.entries.read().unwrap().get(&pb).is_none());
             assert!(store.retrieve(pb.clone()).is_ok());
 
             let pb = pb.with_base(store.path().clone());
-            {
-                assert!(store.entries.read().unwrap().get(&pb).is_some());
-            }
+            assert!(store.entries.read().unwrap().get(&pb).is_some());
         }
     }
 
@@ -2850,15 +2842,11 @@ aspect = "test"
 
         assert!(store.create(pb.clone()).is_ok());
         let pb = pb.with_base(store.path().clone());
-        {
-            assert!(store.entries.read().unwrap().get(&pb).is_some());
-        }
+        assert!(store.entries.read().unwrap().get(&pb).is_some());
 
         assert!(store.delete(pb.clone()).is_err());
         // But the entry is removed, as we fail post-delete
-        {
-            assert!(store.entries.read().unwrap().get(&pb).is_none());
-        }
+        assert!(store.entries.read().unwrap().get(&pb).is_none());
     }
 
     #[test]
@@ -2868,9 +2856,7 @@ aspect = "test"
         let fle     = store.create(pb.clone()).unwrap();
         let pb      = pb.with_base(store.path().clone());
 
-        {
-            assert!(store.entries.read().unwrap().get(&pb).is_some());
-        }
+        assert!(store.entries.read().unwrap().get(&pb).is_some());
         assert!(store.update(fle).is_err());
     }
 
@@ -2938,9 +2924,7 @@ aspect = "test"
 
         assert!(store.create(pb.clone()).is_ok());
         let pb = pb.with_base(store.path().clone());
-        {
-            assert!(store.entries.read().unwrap().get(&pb).is_some());
-        }
+        assert!(store.entries.read().unwrap().get(&pb).is_some());
 
         assert!(store.delete(pb.clone()).is_ok());
         // But the entry is removed, as we fail post-delete
@@ -2954,9 +2938,7 @@ aspect = "test"
         let fle     = store.create(pb.clone()).unwrap();
         let pb      = pb.with_base(store.path().clone());
 
-        {
-            assert!(store.entries.read().unwrap().get(&pb).is_some());
-        }
+        assert!(store.entries.read().unwrap().get(&pb).is_some());
         assert!(store.update(fle).is_ok());
     }
 }
