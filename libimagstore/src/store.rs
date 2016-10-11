@@ -527,7 +527,7 @@ impl Store {
     /// # Assumptions
     /// This method assumes that entry is dropped _right after_ the call, hence
     /// it is not public.
-    fn _update<'a>(&'a self, entry: &mut FileLockEntry<'a>, modify_presence: bool) -> Result<()> {
+    fn _update<'a>(&'a self, mut entry: &mut FileLockEntry<'a>, modify_presence: bool) -> Result<()> {
         let _ = try!(self.execute_hooks_for_mut_file(self.pre_update_aspects.clone(), &mut entry)
             .map_err_into(SEK::PreHookExecuteError)
             .map_err_into(SEK::HookExecutionError)
